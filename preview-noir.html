@@ -1,0 +1,1779 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Aaryan Anand — Photography (Preview: Editorial)</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --black: #0a0a09;
+      --paper: #e9e6dc;
+      --muted: #9d9a91;
+      --line: rgba(233, 230, 220, .18);
+
+      --pink: #d8a1aa;
+      --lavender: #a9a4c4;
+      --green: #aab891;
+      --orange: #b97851;
+
+      --pad: clamp(18px, 3vw, 48px);
+      --display: "Inter", sans-serif;
+      --mono: "DM Mono", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--black);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--black);
+      color: var(--paper);
+      font-family: var(--display);
+      overflow-x: hidden;
+    }
+
+    body.loading {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      color: inherit;
+      font: inherit;
+    }
+
+    /* ---------------------------------------------------------
+       LOADER
+    --------------------------------------------------------- */
+
+    .loader {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #080807;
+      transition:
+        opacity 900ms cubic-bezier(.77,0,.18,1),
+        visibility 900ms;
+    }
+
+    .loader.done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-inner {
+      width: min(520px, calc(100vw - 48px));
+    }
+
+    .loader-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 18px;
+
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--muted);
+    }
+
+    .loader-line {
+      height: 1px;
+      background: rgba(255,255,255,.2);
+      overflow: hidden;
+    }
+
+    .loader-progress {
+      width: 0%;
+      height: 100%;
+      background: var(--paper);
+      transition: width 80ms linear;
+    }
+
+    .loader-number {
+      margin-top: 14px;
+      font-size: clamp(60px, 12vw, 120px);
+      font-weight: 800;
+      letter-spacing: -.09em;
+      line-height: .8;
+    }
+
+    /* ---------------------------------------------------------
+       NAV
+    --------------------------------------------------------- */
+
+    .nav {
+      position: absolute;
+      z-index: 50;
+      top: 0;
+      left: 0;
+
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+
+      width: 100%;
+      padding: 24px var(--pad);
+
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .nav-side {
+      display: flex;
+      gap: 7px;
+    }
+
+    .nav-side:last-child {
+      justify-content: flex-end;
+    }
+
+    .nav-pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 13px;
+
+      background: rgba(8,8,7,.25);
+      backdrop-filter: blur(12px);
+
+      transition:
+        background .2s ease,
+        color .2s ease;
+    }
+
+    .nav-pill:hover {
+      background: var(--paper);
+      color: var(--black);
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -.08em;
+    }
+
+    /* ---------------------------------------------------------
+       HERO
+    --------------------------------------------------------- */
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      padding: 100px var(--pad) 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+    }
+
+    .hero-image {
+      position: absolute;
+      inset: 7% 10% 5%;
+
+      overflow: hidden;
+
+      background-image: url('images/travel/20260317_000509__DSC03796.jpg');
+      background-size: cover;
+      background-position: center;
+
+      transform:
+        translate3d(
+          calc(var(--mx, 0) * 8px),
+          calc(var(--my, 0) * 8px),
+          0
+        )
+        scale(1.035);
+
+      transition: transform 1s cubic-bezier(.22,.61,.36,1);
+    }
+
+    .hero-image::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+
+      background:
+        repeating-linear-gradient(
+          120deg,
+          transparent 0 80px,
+          rgba(255,255,255,.05) 81px,
+          transparent 82px 160px
+        );
+
+      transform: rotate(-5deg);
+      mix-blend-mode: overlay;
+    }
+
+    .hero-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(0,0,0,.2),
+          transparent 40%,
+          rgba(0,0,0,.25)
+        );
+
+      mix-blend-mode: multiply;
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 3;
+
+      width: 100%;
+
+      margin: 0;
+
+      text-align: center;
+
+      font-size: clamp(56px, 13vw, 190px);
+      line-height: .82;
+      letter-spacing: -.06em;
+      font-weight: 800;
+
+      mix-blend-mode: difference;
+    }
+
+    .hero-description {
+      position: absolute;
+      z-index: 5;
+
+      right: 13%;
+      bottom: 50px;
+
+      width: 230px;
+
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .hero-index {
+      position: absolute;
+      z-index: 5;
+
+      left: var(--pad);
+      bottom: 45px;
+
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+
+      writing-mode: vertical-rl;
+
+      color: rgba(255,255,255,.7);
+    }
+
+    /* ---------------------------------------------------------
+       INTRO / PINNED BIO
+    --------------------------------------------------------- */
+
+    .bio {
+      min-height: 150vh;
+      position: relative;
+      background: var(--paper);
+      color: var(--black);
+    }
+
+    .bio-sticky {
+      position: sticky;
+      top: 0;
+
+      min-height: 100svh;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      align-items: center;
+
+      padding: var(--pad);
+
+      overflow: hidden;
+    }
+
+    .bio-label {
+      position: absolute;
+      top: 30px;
+      left: var(--pad);
+
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .bio-copy {
+      max-width: 760px;
+    }
+
+    .bio-copy h2 {
+      margin: 0;
+
+      font-size: clamp(46px, 7vw, 110px);
+      line-height: .86;
+      letter-spacing: -.07em;
+    }
+
+    .bio-copy p {
+      max-width: 420px;
+      margin-top: 40px;
+
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .bio-portrait {
+      position: relative;
+
+      width: min(75%, 450px);
+      aspect-ratio: .75;
+
+      justify-self: center;
+
+      overflow: hidden;
+
+      background-image: url('images/travel/20260316_231208__DSC03764.jpg');
+      background-size: cover;
+      background-position: center;
+
+      filter: grayscale(.25);
+    }
+
+    .bio-portrait::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent 30%,
+          rgba(255,255,255,.25),
+          transparent 70%
+        );
+
+      transform:
+        translateX(
+          calc(var(--bio-light, -100) * 1%)
+        );
+
+      transition: transform .15s linear;
+    }
+
+    /* ---------------------------------------------------------
+       PROJECT CHAPTERS
+    --------------------------------------------------------- */
+
+    .chapter {
+      position: relative;
+
+      min-height: 100svh;
+
+      padding: var(--pad);
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(20px, 4vw, 70px);
+
+      align-items: stretch;
+    }
+
+    .chapter-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .chapter-number {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .chapter-title {
+      margin: auto 0;
+
+      max-width: 8ch;
+
+      font-size: clamp(60px, 9vw, 130px);
+      line-height: .8;
+      letter-spacing: -.07em;
+    }
+
+    .chapter-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+    }
+
+    .chapter-link {
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 6px;
+    }
+
+    .chapter-media {
+      position: relative;
+
+      overflow: hidden;
+
+      min-height: 70vh;
+
+      background: #222;
+    }
+
+    .chapter-media-inner {
+      position: absolute;
+      inset: -4%;
+
+      background-size: cover;
+      background-position: center;
+
+      transition:
+        transform 900ms cubic-bezier(.22,.61,.36,1);
+    }
+
+    .chapter:hover .chapter-media-inner,
+    .chapter:focus-within .chapter-media-inner {
+      transform: scale(1.02);
+    }
+
+    .chapter-media-inner::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.1),
+          transparent 40%,
+          rgba(0,0,0,.2)
+        );
+    }
+
+    .project-one { background-image: url('images/travel/20260318_223300__DSC04176.jpg'); }
+    .project-two { background-image: url('images/everyday/20260808_183142__DSC04086.jpg'); }
+    .project-three { background-image: url('images/everyday/DSCF2049.jpg'); }
+
+    .pink {
+      background-color: var(--pink);
+      color: var(--black);
+    }
+
+    .lavender {
+      background-color: var(--lavender);
+      color: var(--black);
+    }
+
+    .green {
+      background-color: var(--green);
+      color: var(--black);
+    }
+
+    .orange {
+      background-color: var(--orange);
+      color: var(--paper);
+    }
+
+    /* ---------------------------------------------------------
+       ARCHIVE
+    --------------------------------------------------------- */
+
+    .archive {
+      position: relative;
+
+      min-height: 170vh;
+
+      background: #10100f;
+      padding: 12vh var(--pad);
+    }
+
+    .archive-sticky {
+      position: sticky;
+      top: 8vh;
+
+      min-height: 84vh;
+
+      display: grid;
+      grid-template-columns: .25fr .75fr;
+      gap: 50px;
+    }
+
+    .archive-index {
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.8;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .archive-index span {
+      display: block;
+      color: var(--muted);
+      transition: color .25s;
+    }
+
+    .archive-index span.active {
+      color: var(--paper);
+    }
+
+    .archive-player {
+      position: relative;
+      overflow: hidden;
+
+      background: #191917;
+    }
+
+    .archive-track {
+      position: absolute;
+      inset: 0;
+
+      display: flex;
+
+      transition:
+        transform 700ms cubic-bezier(.22,.61,.36,1);
+    }
+
+    .archive-card {
+      min-width: 100%;
+      padding: clamp(25px, 5vw, 70px);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .archive-card h3 {
+      margin: 0;
+
+      font-size: clamp(50px, 9vw, 130px);
+      line-height: .8;
+      letter-spacing: -.07em;
+    }
+
+    .archive-card p {
+      max-width: 350px;
+      line-height: 1.5;
+    }
+
+    /* ---------------------------------------------------------
+       LIGHT TABLE
+    --------------------------------------------------------- */
+
+    .light-table {
+      min-height: 110vh;
+
+      position: relative;
+
+      background: #d8d4c9;
+      color: #111;
+      padding: 10vh var(--pad);
+    }
+
+    .light-table-header {
+      display: flex;
+      justify-content: space-between;
+
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .light-grid {
+      margin-top: 8vh;
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .light-image {
+      aspect-ratio: 1;
+
+      position: relative;
+      overflow: hidden;
+
+      background-size: cover;
+      background-position: center;
+
+      filter: grayscale(.5);
+
+      transition:
+        filter .4s ease,
+        transform .4s ease;
+    }
+
+    .light-image:hover {
+      filter: grayscale(0);
+      transform: scale(.985);
+    }
+
+    .light-image:nth-child(1) { background-image: url('images/travel/20260315_111827__DSC03591.jpg'); }
+    .light-image:nth-child(2) { background-image: url('images/travel/20260316_083916__DSC03754.jpg'); }
+    .light-image:nth-child(3) { background-image: url('images/travel/20260317_013229__DSC03810.jpg'); }
+    .light-image:nth-child(4) { background-image: url('images/travel/20260317_073949__DSC03896.jpg'); }
+    .light-image:nth-child(5) { background-image: url('images/everyday/20260809_001425__DSC04165.jpg'); }
+    .light-image:nth-child(6) { background-image: url('images/everyday/DSCF2017.jpg'); }
+
+    /* ---------------------------------------------------------
+       SERVICES
+    --------------------------------------------------------- */
+
+    .services {
+      min-height: 100svh;
+
+      display: flex;
+      align-items: center;
+
+      padding: var(--pad);
+
+      background: var(--paper);
+      color: var(--black);
+    }
+
+    .services-list {
+      width: 100%;
+    }
+
+    .service {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+
+      padding: 8px 0;
+
+      border-bottom: 1px solid rgba(0,0,0,.18);
+
+      font-size: clamp(44px, 7vw, 105px);
+      line-height: .92;
+      letter-spacing: -.06em;
+
+      transition:
+        padding-left .35s cubic-bezier(.22,.61,.36,1);
+    }
+
+    .service:hover {
+      padding-left: 3vw;
+    }
+
+    .service small {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .08em;
+    }
+
+    /* ---------------------------------------------------------
+       DARK ROOM
+    --------------------------------------------------------- */
+
+    .dark-room {
+      min-height: 130vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #050505;
+      color: #e8e6df;
+
+      text-align: center;
+    }
+
+    .dark-room-content {
+      width: min(800px, 90%);
+    }
+
+    .dark-room h2 {
+      margin: 0;
+
+      font-size: clamp(60px, 12vw, 180px);
+      line-height: .74;
+      letter-spacing: -.08em;
+    }
+
+    .dark-room p {
+      max-width: 300px;
+      margin: 50px auto 0;
+
+      font-family: var(--mono);
+      font-size: 9px;
+      line-height: 1.7;
+      text-transform: uppercase;
+      color: #777;
+    }
+
+    /* ---------------------------------------------------------
+       FIELD LOG
+    --------------------------------------------------------- */
+
+    .field-log {
+      min-height: 100svh;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      background: #c4bea9;
+      color: #121211;
+    }
+
+    .field-log-copy {
+      padding: var(--pad);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .field-log-copy h2 {
+      margin: auto 0;
+
+      font-size: clamp(52px, 8vw, 120px);
+      line-height: .8;
+      letter-spacing: -.07em;
+    }
+
+    .field-log-image {
+      background-image: url('images/travel/20260403_022203__DSC00234.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* ---------------------------------------------------------
+       FOOTER
+    --------------------------------------------------------- */
+
+    .footer {
+      min-height: 80vh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      padding: var(--pad);
+
+      background: #090909;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+    }
+
+    .footer-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      border-bottom: 1px solid var(--line);
+
+      padding-bottom: 20px;
+    }
+
+    .footer-cta h2 {
+      margin: 0;
+
+      font-size: clamp(52px, 10vw, 160px);
+      line-height: .76;
+      letter-spacing: -.08em;
+    }
+
+    .magnetic {
+      width: 130px;
+      height: 130px;
+
+      border: 1px solid var(--line);
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+
+      transition:
+        transform .25s cubic-bezier(.22,.61,.36,1),
+        background .25s;
+    }
+
+    .magnetic:hover {
+      background: var(--paper);
+      color: var(--black);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+
+      font-family: var(--mono);
+      font-size: 8px;
+      color: #777;
+    }
+
+    /* ---------------------------------------------------------
+       MOBILE
+    --------------------------------------------------------- */
+
+    @media(max-width: 760px) {
+
+      .nav {
+        grid-template-columns: 1fr auto;
+      }
+
+      .nav-side:first-child {
+        display: none;
+      }
+
+      .nav-side:last-child {
+        display: none;
+      }
+
+      .logo {
+        justify-self: start;
+      }
+
+      .hero {
+        min-height: 100svh;
+      }
+
+      .hero-image {
+        inset: 10% 18px 8%;
+      }
+
+      .hero-title {
+        font-size: 15vw;
+      }
+
+      .hero-description {
+        right: 24px;
+        bottom: 40px;
+      }
+
+      .hero-index {
+        display: none;
+      }
+
+      .bio {
+        min-height: auto;
+      }
+
+      .bio-sticky {
+        position: relative;
+
+        min-height: 100svh;
+
+        grid-template-columns: 1fr;
+        gap: 50px;
+      }
+
+      .bio-portrait {
+        width: 65%;
+        justify-self: end;
+      }
+
+      .chapter {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding-top: 80px;
+      }
+
+      .chapter-content {
+        min-height: 65svh;
+      }
+
+      .chapter-media {
+        min-height: 75svh;
+      }
+
+      .archive {
+        min-height: 120vh;
+      }
+
+      .archive-sticky {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .archive-index {
+        display: flex;
+        gap: 20px;
+        overflow: auto;
+      }
+
+      .archive-index span {
+        white-space: nowrap;
+      }
+
+      .light-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .service {
+        font-size: 15vw;
+      }
+
+      .field-log {
+        grid-template-columns: 1fr;
+      }
+
+      .field-log-image {
+        min-height: 60vh;
+      }
+
+      .footer-cta {
+        align-items: end;
+      }
+
+      .magnetic {
+        width: 90px;
+        height: 90px;
+      }
+    }
+
+    /* ---------------------------------------------------------
+       REDUCED MOTION
+    --------------------------------------------------------- */
+
+    @media(prefers-reduced-motion: reduce) {
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.001ms !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+
+      .loader {
+        display: none;
+      }
+
+      body.loading {
+        overflow: auto;
+      }
+    }
+  </style>
+</head>
+
+<body class="loading">
+
+  <!-- =========================================================
+       LOADER
+  ========================================================== -->
+
+  <div class="loader" id="loader">
+
+    <div class="loader-inner">
+
+      <div class="loader-top">
+        <span>Roll / 001</span>
+        <span id="loaderStatus">Initializing</span>
+      </div>
+
+      <div class="loader-line">
+        <div class="loader-progress" id="loaderProgress"></div>
+      </div>
+
+      <div class="loader-number" id="loaderNumber">
+        00
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       NAV
+  ========================================================== -->
+
+  <nav class="nav">
+
+    <div class="nav-side">
+      <a href="#work" class="nav-pill">Work</a>
+      <a href="#archive" class="nav-pill">Archive</a>
+    </div>
+
+    <a href="/" class="logo">AA</a>
+
+    <div class="nav-side">
+      <a href="#about" class="nav-pill">About</a>
+      <a href="#contact" class="nav-pill">Contact</a>
+    </div>
+
+  </nav>
+
+
+  <main>
+
+    <!-- =======================================================
+         HERO
+    ======================================================== -->
+
+    <section class="hero">
+
+      <div class="hero-image" id="heroImage"></div>
+
+      <h1 class="hero-title">
+        AARYAN ANAND
+      </h1>
+
+      <span class="hero-index">
+        Photography / 01
+      </span>
+
+      <p class="hero-description">
+        Travel, portrait, and everyday photography — moments from Bhutan, Taiwan, Thailand, and home.
+      </p>
+
+    </section>
+
+
+    <!-- =======================================================
+         PINNED BIO
+    ======================================================== -->
+
+    <section class="bio" id="about">
+
+      <div class="bio-sticky">
+
+        <div class="bio-label">
+          02 / About
+        </div>
+
+        <div class="bio-copy">
+
+          <h2>
+            I SHOOT<br>
+            WHAT'S<br>
+            REAL.
+          </h2>
+
+          <p>
+            I'm Aaryan Anand — a photographer documenting travel, people,
+            and everyday life. This is an archive of what I've seen,
+            unstaged and unfiltered.
+          </p>
+
+        </div>
+
+        <div
+          class="bio-portrait"
+          id="bioPortrait"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         CHAPTER 01 — TRAVEL
+    ======================================================== -->
+
+    <section
+      class="chapter pink"
+      id="work"
+    >
+
+      <div class="chapter-content">
+
+        <span class="chapter-number">
+          Collection / 01
+        </span>
+
+        <h2 class="chapter-title">
+          TRAVEL
+        </h2>
+
+        <div class="chapter-footer">
+          <span>Bhutan · Taiwan · Thailand</span>
+
+          <a href="/" class="chapter-link">
+            View gallery ↗
+          </a>
+        </div>
+
+      </div>
+
+      <div class="chapter-media">
+
+        <div
+          class="chapter-media-inner project-one"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         CHAPTER 02 — EVERYDAY
+    ======================================================== -->
+
+    <section class="chapter lavender">
+
+      <div class="chapter-content">
+
+        <span class="chapter-number">
+          Collection / 02
+        </span>
+
+        <h2 class="chapter-title">
+          EVERYDAY
+        </h2>
+
+        <div class="chapter-footer">
+          <span>Ongoing</span>
+
+          <a href="/" class="chapter-link">
+            View gallery ↗
+          </a>
+        </div>
+
+      </div>
+
+      <div class="chapter-media">
+
+        <div
+          class="chapter-media-inner project-two"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         CHAPTER 03 — EVERYDAY II
+    ======================================================== -->
+
+    <section class="chapter green">
+
+      <div class="chapter-content">
+
+        <span class="chapter-number">
+          Collection / 03
+        </span>
+
+        <h2 class="chapter-title">
+          MOMENTS
+        </h2>
+
+        <div class="chapter-footer">
+          <span>Everyday · Unstaged</span>
+
+          <a href="/" class="chapter-link">
+            View gallery ↗
+          </a>
+        </div>
+
+      </div>
+
+      <div class="chapter-media">
+
+        <div
+          class="chapter-media-inner project-three"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         ARCHIVE / PLAYHEAD
+    ======================================================== -->
+
+    <section
+      class="archive"
+      id="archive"
+    >
+
+      <div class="archive-sticky">
+
+        <div
+          class="archive-index"
+          id="archiveIndex"
+        >
+
+          <span class="active">01 — Bhutan</span>
+          <span>02 — Taiwan</span>
+          <span>03 — Thailand</span>
+          <span>04 — Home</span>
+
+        </div>
+
+        <div class="archive-player">
+
+          <div
+            class="archive-track"
+            id="archiveTrack"
+          >
+
+            <article class="archive-card pink">
+              <span>Archive / 01</span>
+
+              <h3>
+                BHUTAN
+              </h3>
+
+              <p>
+                Temples, mountain passes, and prayer flags —
+                Phuentsholing to Paro.
+              </p>
+            </article>
+
+            <article class="archive-card lavender">
+              <span>Archive / 02</span>
+
+              <h3>
+                TAIWAN
+              </h3>
+
+              <p>
+                Kaohsiung streets and Taipei nights.
+              </p>
+            </article>
+
+            <article class="archive-card green">
+              <span>Archive / 03</span>
+
+              <h3>
+                THAILAND
+              </h3>
+
+              <p>
+                Bangkok, early mornings and street life.
+              </p>
+            </article>
+
+            <article class="archive-card orange">
+              <span>Archive / 04</span>
+
+              <h3>
+                HOME
+              </h3>
+
+              <p>
+                California coastline and everyday moments.
+              </p>
+            </article>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         LIGHT TABLE
+    ======================================================== -->
+
+    <section class="light-table">
+
+      <div class="light-table-header">
+        <span>Inspection / Light Table</span>
+        <span>76 Frames</span>
+      </div>
+
+      <div class="light-grid">
+
+        <div class="light-image"></div>
+        <div class="light-image"></div>
+        <div class="light-image"></div>
+        <div class="light-image"></div>
+        <div class="light-image"></div>
+        <div class="light-image"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SERVICES
+    ======================================================== -->
+
+    <section class="services">
+
+      <div class="services-list">
+
+        <div class="service">
+          <small>01</small>
+          Travel
+        </div>
+
+        <div class="service">
+          <small>02</small>
+          Portrait
+        </div>
+
+        <div class="service">
+          <small>03</small>
+          Documentary
+        </div>
+
+        <div class="service">
+          <small>04</small>
+          Street
+        </div>
+
+        <div class="service">
+          <small>05</small>
+          Film
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         DARK ROOM
+    ======================================================== -->
+
+    <section class="dark-room">
+
+      <div class="dark-room-content">
+
+        <h2>
+          LESS<br>
+          NOISE.
+        </h2>
+
+        <p>
+          Clarity isn't the absence of detail.
+          It's knowing which frame
+          deserves to remain.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         FIELD LOG
+    ======================================================== -->
+
+    <section class="field-log">
+
+      <div class="field-log-copy">
+
+        <span
+          style="
+            font-family: var(--mono);
+            font-size: 9px;
+            text-transform: uppercase;
+          "
+        >
+          Field log / 04
+        </span>
+
+        <h2>
+          OBSERVE.<br>
+          RECORD.<br>
+          RETURN.
+        </h2>
+
+        <span
+          style="
+            font-family: var(--mono);
+            font-size: 9px;
+          "
+        >
+          Taiwan / 22°37′N
+        </span>
+
+      </div>
+
+      <div class="field-log-image"></div>
+
+    </section>
+
+
+    <!-- =======================================================
+         FOOTER
+    ======================================================== -->
+
+    <footer
+      class="footer"
+      id="contact"
+    >
+
+      <div class="footer-top">
+        <span>Aaryan Anand</span>
+        <span>Available for shoots</span>
+      </div>
+
+      <div class="footer-cta">
+
+        <h2>
+          LET'S<br>
+          TALK.
+        </h2>
+
+        <a
+          href="mailto:aaryan.r.anand@gmail.com"
+          class="magnetic"
+          id="magnetic"
+        >
+          Start a conversation
+        </a>
+
+      </div>
+
+      <div class="footer-bottom">
+
+        <span>
+          © 2026 Aaryan Anand
+        </span>
+
+        <span>
+          <a href="/">Back to gallery</a>
+        </span>
+
+      </div>
+
+    </footer>
+
+  </main>
+
+
+  <script>
+
+    /* =========================================================
+       LOADER
+    ========================================================= */
+
+    const loader = document.getElementById("loader");
+    const progress = document.getElementById("loaderProgress");
+    const number = document.getElementById("loaderNumber");
+    const status = document.getElementById("loaderStatus");
+
+    let loadingProgress = 0;
+
+    const loadingTimer = setInterval(() => {
+
+      loadingProgress += Math.random() * 8 + 3;
+
+      if (loadingProgress >= 100) {
+
+        loadingProgress = 100;
+
+        clearInterval(loadingTimer);
+
+        status.textContent = "Ready";
+
+        setTimeout(() => {
+
+          loader.classList.add("done");
+          document.body.classList.remove("loading");
+
+        }, 450);
+
+      } else {
+
+        status.textContent =
+          loadingProgress < 30
+            ? "Initializing"
+            : loadingProgress < 70
+              ? "Decoding"
+              : "Preparing";
+
+      }
+
+      progress.style.width = `${loadingProgress}%`;
+
+      number.textContent =
+        String(Math.floor(loadingProgress)).padStart(2, "0");
+
+    }, 70);
+
+
+    /* =========================================================
+       HERO MOUSE PARALLAX
+    ========================================================= */
+
+    const hero = document.querySelector(".hero");
+
+    hero.addEventListener("pointermove", event => {
+
+      const rect = hero.getBoundingClientRect();
+
+      const x =
+        (event.clientX - rect.left) /
+        rect.width -
+        .5;
+
+      const y =
+        (event.clientY - rect.top) /
+        rect.height -
+        .5;
+
+      hero.style.setProperty("--mx", x);
+      hero.style.setProperty("--my", y);
+
+    });
+
+
+    /* =========================================================
+       BIO LIGHT TABLE EFFECT
+    ========================================================= */
+
+    const bio = document.querySelector(".bio");
+    const portrait = document.getElementById("bioPortrait");
+
+    const updateBioLight = () => {
+
+      const rect = bio.getBoundingClientRect();
+
+      const progress =
+        (window.innerHeight - rect.top) /
+        (rect.height + window.innerHeight);
+
+      const clamped =
+        Math.max(0, Math.min(1, progress));
+
+      const light =
+        -100 + clamped * 200;
+
+      portrait.style.setProperty(
+        "--bio-light",
+        light
+      );
+
+    };
+
+    window.addEventListener(
+      "scroll",
+      updateBioLight,
+      { passive: true }
+    );
+
+
+    /* =========================================================
+       ARCHIVE PLAYHEAD
+    ========================================================= */
+
+    const archive =
+      document.querySelector(".archive");
+
+    const archiveTrack =
+      document.getElementById("archiveTrack");
+
+    const archiveItems =
+      document.querySelectorAll(
+        "#archiveIndex span"
+      );
+
+    const updateArchive = () => {
+
+      const rect =
+        archive.getBoundingClientRect();
+
+      const total =
+        rect.height - window.innerHeight;
+
+      const travelled =
+        Math.max(
+          0,
+          Math.min(
+            total,
+            -rect.top
+          )
+        );
+
+      const normalized =
+        total <= 0
+          ? 0
+          : travelled / total;
+
+      const index =
+        Math.min(
+          archiveItems.length - 1,
+          Math.floor(
+            normalized *
+            archiveItems.length
+          )
+        );
+
+      archiveTrack.style.transform =
+        `translateX(-${index * 100}%)`;
+
+      archiveItems.forEach(
+        (item, i) => {
+
+          item.classList.toggle(
+            "active",
+            i === index
+          );
+
+        }
+      );
+
+    };
+
+    window.addEventListener(
+      "scroll",
+      updateArchive,
+      { passive: true }
+    );
+
+
+    /* =========================================================
+       MAGNETIC BUTTON
+    ========================================================= */
+
+    const magnetic =
+      document.getElementById("magnetic");
+
+    magnetic.addEventListener(
+      "pointermove",
+      event => {
+
+        const rect =
+          magnetic.getBoundingClientRect();
+
+        const x =
+          event.clientX -
+          rect.left -
+          rect.width / 2;
+
+        const y =
+          event.clientY -
+          rect.top -
+          rect.height / 2;
+
+        magnetic.style.transform =
+          `translate(${x * .18}px, ${y * .18}px)`;
+
+      }
+    );
+
+    magnetic.addEventListener(
+      "pointerleave",
+      () => {
+
+        magnetic.style.transform =
+          "translate(0,0)";
+
+      }
+    );
+
+
+    /* =========================================================
+       SCROLL REVEALS
+    ========================================================= */
+
+    const revealElements =
+      document.querySelectorAll(
+        ".chapter, .services, .dark-room, .field-log"
+      );
+
+    const observer =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(entry => {
+
+            if (!entry.isIntersecting)
+              return;
+
+            entry.target.style
+              .setProperty(
+                "--visible",
+                "1"
+              );
+
+          });
+
+        },
+        {
+          threshold: .15
+        }
+      );
+
+    revealElements.forEach(
+      element =>
+        observer.observe(element)
+    );
+
+
+    /* =========================================================
+       KEYBOARD / ACCESSIBILITY
+    ========================================================= */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Escape"
+        ) {
+
+          document
+            .activeElement
+            ?.blur();
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
