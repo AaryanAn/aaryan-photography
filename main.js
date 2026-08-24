@@ -1,5 +1,11 @@
+import initHeroDefault from './heroDefault.js?v=8';
+import initHeroGallery from './heroGallery.js?v=8';
+import initHeroSketchbook from './heroSketchbook.js?v=8';
+
 const SECTIONS = ['travel', 'portraits', 'everyday'];
 const IMAGE_EXT = /\.(jpe?g|png|webp)$/i;
+const HERO_VARIANTS = ['default', 'gallery', 'sketchbook'];
+const HERO_STORAGE_KEY = 'heroVariant';
 
 const state = {
   photos: {},   // section -> [{name, url, city, country, title}]
@@ -268,16 +274,59 @@ function wireScrollReveal() {
   targets.forEach((t) => observer.observe(t));
 }
 
+function pickHeroVariant() {
+  const params = new URLSearchParams(window.location.search);
+  const override = params.get('hero');
+  if (override && HERO_VARIANTS.includes(override)) return override;
+
+  const stored = window.localStorage.getItem(HERO_STORAGE_KEY);
+  if (stored && HERO_VARIANTS.includes(stored)) return stored;
+
+  const chosen = HERO_VARIANTS[Math.floor(Math.random() * HERO_VARIANTS.length)];
+  try { window.localStorage.setItem(HERO_STORAGE_KEY, chosen); } catch (e) { /* private browsing */ }
+  return chosen;
+}
+
+function mountHeroVariant(travelPhotos) {
+  const container = document.getElementById('heroVisual');
+  if (!container) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const variant = prefersReducedMotion ? 'default' : pickHeroVariant();
+  document.getElementById('hero').dataset.variant = variant;
+
+  if (variant === 'gallery') {
+    const host = document.createElement('div');
+    host.className = 'hero-gallery-host';
+    const canvas = document.createElement('canvas');
+    host.appendChild(canvas);
+    container.appendChild(host);
+    const sample = travelPhotos.slice(0, 25).filter((_, i) => i % 5 === 0).map((p) => p.url);
+    if (sample.length) initHeroGallery(host, canvas, sample);
+    else initHeroDefault(container);
+  } else if (variant === 'sketchbook') {
+    initHeroSketchbook(container, travelPhotos.slice(0, 8));
+  } else {
+    initHeroDefault(container);
+  }
+}
+
 async function init() {
   wireLightbox();
   wireCustomCursor();
 
   const allCountries = [];
+  let heroMounted = false;
 
   for (const section of SECTIONS) {
     const [entries, metadata] = await Promise.all([fetchBrowse(section), fetchMetadata(section)]);
     Object.values(metadata).forEach((m) => { if (m.country) allCountries.push(m.country); });
     renderSection(section, entries, metadata);
+
+    if (!heroMounted) {
+      mountHeroVariant(state.photos[section] || []);
+      heroMounted = true;
+    }
 
     const header = document.querySelector(`#section-${section} .section-header`);
     if (header) header.classList.add('reveal');
