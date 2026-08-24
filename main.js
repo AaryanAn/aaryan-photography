@@ -1,10 +1,9 @@
-import initHeroDefault from './heroDefault.js?v=8';
-import initHeroGallery from './heroGallery.js?v=8';
-import initHeroSketchbook from './heroSketchbook.js?v=8';
+import initHeroDefault from './heroDefault.js?v=9';
+import initHeroGallery from './heroGallery.js?v=9';
 
 const SECTIONS = ['travel', 'portraits', 'everyday'];
 const IMAGE_EXT = /\.(jpe?g|png|webp)$/i;
-const HERO_VARIANTS = ['default', 'gallery', 'sketchbook'];
+const HERO_VARIANTS = ['default', 'gallery'];
 const HERO_STORAGE_KEY = 'heroVariant';
 
 const state = {
@@ -304,8 +303,6 @@ function mountHeroVariant(travelPhotos) {
     const sample = travelPhotos.slice(0, 25).filter((_, i) => i % 5 === 0).map((p) => p.url);
     if (sample.length) initHeroGallery(host, canvas, sample);
     else initHeroDefault(container);
-  } else if (variant === 'sketchbook') {
-    initHeroSketchbook(container, travelPhotos.slice(0, 8));
   } else {
     initHeroDefault(container);
   }
