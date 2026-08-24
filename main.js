@@ -1,5 +1,10 @@
+import initHeroDefault from './heroDefault.js?v=11';
+import initHeroArchive from './heroArchive.js?v=11';
+
 const SECTIONS = ['travel', 'portraits', 'everyday'];
 const IMAGE_EXT = /\.(jpe?g|png|webp)$/i;
+const HERO_VARIANTS = ['default', 'archive'];
+const HERO_STORAGE_KEY = 'heroVariant';
 
 const state = {
   photos: {},   // section -> [{name, url, city, country, title}]
@@ -268,16 +273,50 @@ function wireScrollReveal() {
   targets.forEach((t) => observer.observe(t));
 }
 
+function pickHeroVariant() {
+  const params = new URLSearchParams(window.location.search);
+  const override = params.get('hero');
+  if (override && HERO_VARIANTS.includes(override)) return override;
+
+  const stored = window.localStorage.getItem(HERO_STORAGE_KEY);
+  if (stored && HERO_VARIANTS.includes(stored)) return stored;
+
+  const chosen = HERO_VARIANTS[Math.floor(Math.random() * HERO_VARIANTS.length)];
+  try { window.localStorage.setItem(HERO_STORAGE_KEY, chosen); } catch (e) { /* private browsing */ }
+  return chosen;
+}
+
+function mountHeroVariant(travelPhotos) {
+  const container = document.getElementById('heroVisual');
+  if (!container) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const variant = prefersReducedMotion ? 'default' : pickHeroVariant();
+  document.getElementById('hero').dataset.variant = variant;
+
+  if (variant === 'archive' && travelPhotos.length) {
+    initHeroArchive(container, travelPhotos);
+  } else {
+    initHeroDefault(container);
+  }
+}
+
 async function init() {
   wireLightbox();
   wireCustomCursor();
 
   const allCountries = [];
+  let heroMounted = false;
 
   for (const section of SECTIONS) {
     const [entries, metadata] = await Promise.all([fetchBrowse(section), fetchMetadata(section)]);
     Object.values(metadata).forEach((m) => { if (m.country) allCountries.push(m.country); });
     renderSection(section, entries, metadata);
+
+    if (!heroMounted) {
+      mountHeroVariant(state.photos[section] || []);
+      heroMounted = true;
+    }
 
     const header = document.querySelector(`#section-${section} .section-header`);
     if (header) header.classList.add('reveal');
