@@ -138,22 +138,41 @@ function wireProgressDots(section, strip, dots) {
   const cards = [...strip.children];
   const countEl = document.getElementById(`count-${section}`);
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const idx = cards.indexOf(entry.target);
-        if (idx === -1) return;
-        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-          dotEls.forEach((d) => d.classList.remove('is-active'));
-          dotEls[idx]?.classList.add('is-active');
-          if (countEl) countEl.textContent = `${idx + 1} / ${cards.length}`;
-        }
-      });
-    },
-    { root: strip, threshold: [0, 0.6, 1] }
-  );
-  cards.forEach((card) => observer.observe(card));
-  dotEls[0]?.classList.add('is-active');
+  let activeIndex = -1;
+  const setActive = (idx) => {
+    if (idx === activeIndex) return;
+    activeIndex = idx;
+    dotEls.forEach((d) => d.classList.remove('is-active'));
+    dotEls[idx]?.classList.add('is-active');
+    if (countEl) countEl.textContent = `${idx + 1} / ${cards.length}`;
+  };
+
+  // Deterministic: find whichever card's left edge is closest to the
+  // strip's current scroll position (cards use scroll-snap-align: start).
+  let ticking = false;
+  const updateActiveCard = () => {
+    ticking = false;
+    const pos = strip.scrollLeft;
+    let closest = 0;
+    let closestDist = Infinity;
+    cards.forEach((card, i) => {
+      const dist = Math.abs(card.offsetLeft - strip.offsetLeft - pos);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = i;
+      }
+    });
+    setActive(closest);
+  };
+
+  strip.addEventListener('scroll', () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(updateActiveCard);
+    }
+  });
+
+  setActive(0);
 }
 
 function openLightbox(section, index) {
