@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compare — Aaryan Anand Photography</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8e2d9;
+    --ink: #2c281f;
+    --ink-soft: #7a7266;
+    --terracotta: #b5714a;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 4rem 1.5rem;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 2rem;
+    margin: 0 0 3rem;
+  }
+  .options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 900px;
+  }
+  a.option {
+    display: block;
+    background: #fff;
+    border-radius: 4px;
+    padding: 2rem 1.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: 0 8px 24px rgba(44, 40, 31, 0.12);
+    transition: transform 0.2s ease;
+  }
+  a.option:hover { transform: translateY(-4px); }
+  .option-num {
+    font-family: var(--serif);
+    color: var(--terracotta);
+    font-size: 0.9rem;
+  }
+  .option-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    margin: 0.5rem 0;
+  }
+  .option-desc {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+  <h1>Three options to compare</h1>
+  <div class="options">
+    <a class="option" href="/?hero=default">
+      <div class="option-num">01</div>
+      <div class="option-title">Default</div>
+      <div class="option-desc">Plain serif hero — matches the original recovered design.</div>
+    </a>
+    <a class="option" href="/?hero=archive">
+      <div class="option-num">02</div>
+      <div class="option-title">Archive</div>
+      <div class="option-desc">Bold shadowed title, tilted photo strip, data-readout footer.</div>
+    </a>
+    <a class="option" href="/preview-noir.html">
+      <div class="option-num">03</div>
+      <div class="option-title">Editorial</div>
+      <div class="option-desc">Full alternate page: parallax hero, chapters, archive, light table.</div>
+    </a>
+  </div>
+</body>
+</html>

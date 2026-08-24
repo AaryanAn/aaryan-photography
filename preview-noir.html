@@ -238,6 +238,11 @@
       inset: 0;
 
       background:
+        radial-gradient(
+          ellipse 65% 45% at 50% 50%,
+          rgba(0,0,0,.4),
+          transparent 70%
+        ),
         linear-gradient(
           90deg,
           rgba(0,0,0,.2),
@@ -263,7 +268,11 @@
       letter-spacing: -.06em;
       font-weight: 800;
 
-      mix-blend-mode: difference;
+      color: #fff;
+      text-shadow:
+        0 4px 30px rgba(0, 0, 0, .55),
+        0 2px 10px rgba(0, 0, 0, .5),
+        0 1px 3px rgba(0, 0, 0, .6);
     }
 
     .hero-description {
@@ -1050,7 +1059,6 @@
     <a href="/" class="logo">AA</a>
 
     <div class="nav-side">
-      <a href="#about" class="nav-pill">About</a>
       <a href="#contact" class="nav-pill">Contact</a>
     </div>
 
@@ -1078,28 +1086,6 @@
       <p class="hero-description">
         Travel, portrait, and everyday photography — moments from Bhutan, Taiwan, Thailand, and home.
       </p>
-
-    </section>
-
-
-    <!-- =======================================================
-         PINNED BIO
-    ======================================================== -->
-
-    <section class="bio" id="about">
-
-      <div class="bio-sticky">
-
-        <div class="bio-label">
-          02 / About
-        </div>
-
-        <div
-          class="bio-portrait"
-          id="bioPortrait"
-        ></div>
-
-      </div>
 
     </section>
 
@@ -1339,30 +1325,30 @@
 
       <div class="services-list">
 
-        <div class="service">
+        <a href="/#section-travel" class="service">
           <small>01</small>
           Travel
-        </div>
+        </a>
 
-        <div class="service">
+        <a href="/#section-portraits" class="service">
           <small>02</small>
           Portrait
-        </div>
+        </a>
 
-        <div class="service">
+        <a href="/#section-everyday" class="service">
           <small>03</small>
           Documentary
-        </div>
+        </a>
 
-        <div class="service">
+        <a href="/#section-everyday" class="service">
           <small>04</small>
           Street
-        </div>
+        </a>
 
-        <div class="service">
+        <a href="/#section-everyday" class="service">
           <small>05</small>
           Film
-        </div>
+        </a>
 
       </div>
 
@@ -1556,41 +1542,6 @@
       hero.style.setProperty("--my", y);
 
     });
-
-
-    /* =========================================================
-       BIO LIGHT TABLE EFFECT
-    ========================================================= */
-
-    const bio = document.querySelector(".bio");
-    const portrait = document.getElementById("bioPortrait");
-
-    const updateBioLight = () => {
-
-      const rect = bio.getBoundingClientRect();
-
-      const progress =
-        (window.innerHeight - rect.top) /
-        (rect.height + window.innerHeight);
-
-      const clamped =
-        Math.max(0, Math.min(1, progress));
-
-      const light =
-        -100 + clamped * 200;
-
-      portrait.style.setProperty(
-        "--bio-light",
-        light
-      );
-
-    };
-
-    window.addEventListener(
-      "scroll",
-      updateBioLight,
-      { passive: true }
-    );
 
 
     /* =========================================================
