@@ -9,24 +9,33 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 
   <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
 
-  <header class="site-header reveal">
-    <a href="/" class="site-mark">Aaryan Anand</a>
-    <nav class="filter-bar" id="filterBar" aria-label="Filter by country">
-      <button class="filter-btn is-active" data-country="all" type="button">All</button>
+  <section class="hero">
+    <h1 class="hero-name">Aaryan<br>Anand</h1>
+    <p class="hero-subtitle">Photography</p>
+    <nav class="hero-nav" aria-label="Section links">
+      <a href="#section-travel">Travel</a>
+      <a href="#section-portraits">Portraits</a>
+      <a href="#section-everyday">Everyday</a>
     </nav>
-  </header>
+    <div class="hero-scroll-cue" aria-hidden="true">&darr;</div>
+  </section>
+
+  <nav class="filter-bar" id="filterBar" aria-label="Filter by country">
+    <button class="filter-btn is-active" data-country="all" type="button">All</button>
+  </nav>
 
   <main>
     <section class="gallery-section" id="section-travel" data-section="travel">
       <div class="section-header reveal">
         <span class="section-number">01</span>
-        <h1 class="section-title">Travel</h1>
+        <h2 class="section-title">Travel</h2>
+        <span class="section-count" id="count-travel"></span>
       </div>
       <div class="strip-wrap">
         <div class="strip" id="strip-travel" data-strip="travel"></div>
@@ -37,7 +46,8 @@
     <section class="gallery-section" id="section-portraits" data-section="portraits">
       <div class="section-header reveal">
         <span class="section-number">02</span>
-        <h1 class="section-title">Portraits</h1>
+        <h2 class="section-title">Portraits</h2>
+        <span class="section-count" id="count-portraits"></span>
       </div>
       <div class="strip-wrap">
         <div class="strip" id="strip-portraits" data-strip="portraits"></div>
@@ -48,7 +58,8 @@
     <section class="gallery-section" id="section-everyday" data-section="everyday">
       <div class="section-header reveal">
         <span class="section-number">03</span>
-        <h1 class="section-title">Everyday</h1>
+        <h2 class="section-title">Everyday</h2>
+        <span class="section-count" id="count-everyday"></span>
       </div>
       <div class="strip-wrap">
         <div class="strip" id="strip-everyday" data-strip="everyday"></div>
@@ -69,6 +80,6 @@
     <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next photo" type="button">&#8250;</button>
   </div>
 
-  <script src="main.js?v=2" type="module"></script>
+  <script src="main.js?v=3" type="module"></script>
 </body>
 </html>

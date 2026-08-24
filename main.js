@@ -127,12 +127,16 @@ function renderSection(section, entries, metadata) {
     return;
   }
 
+  const countEl = document.getElementById(`count-${section}`);
+  if (countEl) countEl.textContent = `1 / ${photos.length}`;
+
   wireProgressDots(section, strip, dots);
 }
 
 function wireProgressDots(section, strip, dots) {
   const dotEls = [...dots.children];
   const cards = [...strip.children];
+  const countEl = document.getElementById(`count-${section}`);
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -142,6 +146,7 @@ function wireProgressDots(section, strip, dots) {
         if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
           dotEls.forEach((d) => d.classList.remove('is-active'));
           dotEls[idx]?.classList.add('is-active');
+          if (countEl) countEl.textContent = `${idx + 1} / ${cards.length}`;
         }
       });
     },
