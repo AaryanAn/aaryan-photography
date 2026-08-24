@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aaryan Anand — Photography</title>
+<meta name="description" content="Travel, portrait, and everyday photography by Aaryan Anand.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+  <header class="site-header reveal">
+    <a href="/" class="site-mark">Aaryan Anand</a>
+    <nav class="filter-bar" id="filterBar" aria-label="Filter by country">
+      <button class="filter-btn is-active" data-country="all" type="button">All</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="gallery-section" id="section-travel" data-section="travel">
+      <div class="section-header reveal">
+        <span class="section-number">01</span>
+        <h1 class="section-title">Travel</h1>
+      </div>
+      <div class="strip-wrap">
+        <div class="strip" id="strip-travel" data-strip="travel"></div>
+      </div>
+      <div class="progress-dots" id="dots-travel" data-dots="travel"></div>
+    </section>
+
+    <section class="gallery-section" id="section-portraits" data-section="portraits">
+      <div class="section-header reveal">
+        <span class="section-number">02</span>
+        <h1 class="section-title">Portraits</h1>
+      </div>
+      <div class="strip-wrap">
+        <div class="strip" id="strip-portraits" data-strip="portraits"></div>
+      </div>
+      <div class="progress-dots" id="dots-portraits" data-dots="portraits"></div>
+    </section>
+
+    <section class="gallery-section" id="section-everyday" data-section="everyday">
+      <div class="section-header reveal">
+        <span class="section-number">03</span>
+        <h1 class="section-title">Everyday</h1>
+      </div>
+      <div class="strip-wrap">
+        <div class="strip" id="strip-everyday" data-strip="everyday"></div>
+      </div>
+      <div class="progress-dots" id="dots-everyday" data-dots="everyday"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="mailto:aaryan.r.anand@gmail.com">aaryan.r.anand@gmail.com</a>
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close" type="button">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous photo" type="button">&#8249;</button>
+    <img class="lightbox-image" id="lightboxImage" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next photo" type="button">&#8250;</button>
+  </div>
+
+  <script src="main.js?v=2" type="module"></script>
+</body>
+</html>
