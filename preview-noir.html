@@ -286,6 +286,10 @@
 
       font-size: 12px;
       line-height: 1.5;
+      color: #fff;
+      text-shadow:
+        0 2px 12px rgba(0, 0, 0, .55),
+        0 1px 4px rgba(0, 0, 0, .5);
     }
 
     .hero-index {
@@ -303,104 +307,6 @@
       writing-mode: vertical-rl;
 
       color: rgba(10,10,9,.6);
-    }
-
-    /* ---------------------------------------------------------
-       INTRO / PINNED BIO
-    --------------------------------------------------------- */
-
-    .bio {
-      min-height: 150vh;
-      position: relative;
-      background: var(--paper);
-      color: var(--black);
-    }
-
-    .bio-sticky {
-      position: sticky;
-      top: 0;
-
-      min-height: 100svh;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: var(--pad);
-
-      overflow: hidden;
-    }
-
-    .bio-label {
-      position: absolute;
-      top: 30px;
-      left: var(--pad);
-
-      font-family: var(--mono);
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-    }
-
-    .bio-copy {
-      max-width: 760px;
-    }
-
-    .bio-copy h2 {
-      margin: 0;
-
-      font-size: clamp(46px, 7vw, 110px);
-      line-height: .86;
-      letter-spacing: -.07em;
-    }
-
-    .bio-copy p {
-      max-width: 420px;
-      margin-top: 40px;
-
-      font-size: 15px;
-      line-height: 1.5;
-    }
-
-    .bio-portrait {
-      position: relative;
-
-      width: min(75%, 450px);
-      aspect-ratio: .75;
-
-      justify-self: center;
-
-      overflow: hidden;
-      border: 10px solid #fff;
-      box-shadow: 0 16px 40px rgba(10, 10, 9, .2);
-
-      background-image: url('images/travel/20260316_231208__DSC03764.jpg');
-      background-size: cover;
-      background-position: center;
-
-      filter: grayscale(.25);
-    }
-
-    .bio-portrait::after {
-      content: "";
-
-      position: absolute;
-      inset: 0;
-
-      background:
-        linear-gradient(
-          90deg,
-          transparent 30%,
-          rgba(255,255,255,.25),
-          transparent 70%
-        );
-
-      transform:
-        translateX(
-          calc(var(--bio-light, -100) * 1%)
-        );
-
-      transition: transform .15s linear;
     }
 
     /* ---------------------------------------------------------
@@ -504,7 +410,6 @@
 
     .project-one { background-image: url('images/travel/20260318_223300__DSC04176.jpg'); }
     .project-two { background-image: url('images/everyday/20260808_183142__DSC04086.jpg'); }
-    .project-three { background-image: url('images/everyday/DSCF2049.jpg'); }
 
     .pink {
       background-color: var(--pink);
@@ -915,20 +820,6 @@
         display: none;
       }
 
-      .bio {
-        min-height: auto;
-      }
-
-      .bio-sticky {
-        position: relative;
-
-        min-height: 100svh;
-      }
-
-      .bio-portrait {
-        width: 78%;
-      }
-
       .chapter {
         grid-template-columns: 1fr;
         min-height: auto;
@@ -1084,7 +975,7 @@
       </span>
 
       <p class="hero-description">
-        Travel, portrait, and everyday photography — moments from Bhutan, Taiwan, Thailand, and home.
+        Travel and everyday photography — moments from Bhutan, Taiwan, Thailand, and home.
       </p>
 
     </section>
@@ -1112,7 +1003,7 @@
         <div class="chapter-footer">
           <span>Bhutan · Taiwan · Thailand</span>
 
-          <a href="/" class="chapter-link">
+          <a href="/#section-travel" class="chapter-link">
             View gallery ↗
           </a>
         </div>
@@ -1149,7 +1040,7 @@
         <div class="chapter-footer">
           <span>Ongoing</span>
 
-          <a href="/" class="chapter-link">
+          <a href="/#section-everyday" class="chapter-link">
             View gallery ↗
           </a>
         </div>
@@ -1160,43 +1051,6 @@
 
         <div
           class="chapter-media-inner project-two"
-        ></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =======================================================
-         CHAPTER 03 — EVERYDAY II
-    ======================================================== -->
-
-    <section class="chapter green">
-
-      <div class="chapter-content">
-
-        <span class="chapter-number">
-          Collection / 03
-        </span>
-
-        <h2 class="chapter-title">
-          MOMENTS
-        </h2>
-
-        <div class="chapter-footer">
-          <span>Everyday · Unstaged</span>
-
-          <a href="/" class="chapter-link">
-            View gallery ↗
-          </a>
-        </div>
-
-      </div>
-
-      <div class="chapter-media">
-
-        <div
-          class="chapter-media-inner project-three"
         ></div>
 
       </div>
@@ -1330,24 +1184,9 @@
           Travel
         </a>
 
-        <a href="/#section-portraits" class="service">
+        <a href="/#section-everyday" class="service">
           <small>02</small>
-          Portrait
-        </a>
-
-        <a href="/#section-everyday" class="service">
-          <small>03</small>
-          Documentary
-        </a>
-
-        <a href="/#section-everyday" class="service">
-          <small>04</small>
-          Street
-        </a>
-
-        <a href="/#section-everyday" class="service">
-          <small>05</small>
-          Film
+          Everyday
         </a>
 
       </div>
